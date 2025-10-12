@@ -56,8 +56,5 @@ COPY --from=builder /app/systems.json .
 COPY --from=builder /app/kills.json .
 # Note: kills.json is generated at runtime, so we don't copy it here.
 
-# A security best practice for Cloud Run
-USER nonroot
-
 # The command to run when the container starts
 CMD ["/app/server"]
