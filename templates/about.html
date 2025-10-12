@@ -4,24 +4,29 @@
 
 {{define "main"}}
 <main class="flex-1 p-6 bg-gray-50 overflow-y-auto">
-    <div class="col-span-full bg-white p-6 rounded-lg border border-gray-200">
-        <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-4">
-            About This Project
+    <div class="bg-white p-6 rounded-lg border border-gray-200">
+        <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-6">
+            So, What Is This Thing?
         </h2>
         
-        <div class="prose max-w-none">
+        <div class="prose max-w-none text-gray-700">
             <p>
-                This is where you can write about your project.
+                Welcome to the <strong>Wingspan Data Hub</strong>. Essentially, this is what happens when a Go programmer looks at an old, beloved, but slightly dusty Python app and says, "You know, I could probably rebuild this." 🚀
             </p>
             <p>
-                The Short Circuit bot is a replacement for the EVE Online application "Short Circuit," created as a learning exercise for the Go programming language.
+                This whole project started as a replacement for the classic "Short Circuit" tool. Why? Mostly because staring into the abyss of decade-old code is a special kind of horror, and I wanted a tool that was fast, clean, and didn't creak like my spine.
             </p>
-            <h3>Credits & Acknowledgements</h3>
+            
+            <h3>What Can It Actually Do?</h3>
+            <p>Good question. It's not just a pretty face. Here’s the toolkit at your disposal:</p>
             <ul>
-                <li>Data from the EVE-Scout API</li>
-                <li>Data from the Wingspan TT API</li>
-                <li>EVE Online ESI for game data</li>
+                <li><strong>Live Wormhole Connections:</strong> See a real-time list of all known wormhole connections. Stop guessing and start knowing exactly where that C2 leads without having to face-check it with a 2 billion Loki (soon)</li>
+                <li><strong>Agent Leaderboard:</strong> A little friendly competition never hurt anyone. This board tracks agent scan counts, giving you reason to hate each other</li>
+                <li><strong>Route Planner:</strong> Find the quickest path from A to B through the tangled web of wormhole space. It's like a GPS for people who enjoy the constant threat of being vaporized by sleepers.</li>
             </ul>
+            <p>
+                The goal is simple: modernize and not have an infrastructure thats slower than Zeratul responding to DM's
+            </p>
         </div>
     </div>
 </main>
