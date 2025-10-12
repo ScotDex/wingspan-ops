@@ -53,6 +53,7 @@ COPY --from=builder /app/static ./static
 # Copy your data files
 COPY --from=builder /app/mapSolarSystemJumps.csv .
 COPY --from=builder /app/systems.json .
+COPY --from=builder /app/kills.json .
 # Note: kills.json is generated at runtime, so we don't copy it here.
 
 # A security best practice for Cloud Run
