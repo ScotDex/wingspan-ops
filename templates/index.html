@@ -1,0 +1,82 @@
+{{template "layout.html" .}}
+
+{{define "title"}}Live Map - Wingspan Data Hub{{end}}
+
+{{define "main"}}
+<main class="flex-1 p-6 bg-gray-50 overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="md:col-span-2 bg-white p-4 rounded-lg border border-gray-200 overflow-x-auto">
+        <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-4">Wormhole Connections</h2>
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>From</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>To</span><span class="sort-indicator"></span></th>
+                    <th class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap"><span>Sig ID</span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>EOL</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>Agent</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>Updated</span><span class="sort-indicator"></span></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {{range .Connections}}
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="p-3 whitespace-nowrap">{{.FromName | HTML}}</td>
+                    <td class="p-3 whitespace-nowrap">{{.ToName | HTML}}</td>
+                    <td class="p-3 whitespace-nowrap">{{.SignatureID}}</td>
+                    <td class="p-3 whitespace-nowrap {{if eq .EolStatus "critical"}}text-red-600 font-semibold{{end}}">{{.Eol}}</td>
+                    <td class="p-3 whitespace-nowrap">{{.Scout}}</td>
+                    <td class="p-3 whitespace-nowrap">{{.LastUpdated}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="bg-white p-4 rounded-lg border border-gray-200">
+        <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-4">Agent Leaderboard</h2>
+        <div class="space-y-2 text-sm">
+            {{if .Leaderboard}}
+                {{range .Leaderboard}}
+                <div class="flex justify-between items-center bg-gray-50 px-3 py-2 rounded">
+                    <span>{{.ScoutName}}</span>
+                    <span class="font-bold text-orange-600">{{.ScanCount}} Scans</span>
+                </div>
+                {{end}}
+            {{else}}
+                <p class="text-xs text-gray-500">No scan data available.</p>
+            {{end}}
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainContent = document.querySelector('main');
+        if (!mainContent) return;
+        const sortableHeaders = mainContent.querySelectorAll('th[data-sortable]');
+        sortableHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const table = header.closest('table');
+                const tbody = table.querySelector('tbody');
+                const columnIndex = Array.from(header.parentElement.children).indexOf(header);
+                const isAscending = !header.classList.contains('sort-asc');
+                sortableHeaders.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+                if (isAscending) {
+                    header.classList.add('sort-asc');
+                } else {
+                    header.classList.add('sort-desc');
+                }
+                const rows = Array.from(tbody.querySelectorAll('tr'));
+                rows.sort((rowA, rowB) => {
+                    const cellA = rowA.children[columnIndex].innerText.trim();
+                    const cellB = rowB.children[columnIndex].innerText.trim();
+                    const comparison = cellA.localeCompare(cellB, undefined, { numeric: true });
+                    return isAscending ? comparison : -comparison;
+                });
+                tbody.innerHTML = '';
+                rows.forEach(row => tbody.appendChild(row));
+            });
+        });
+    });
+</script>
+{{end}}

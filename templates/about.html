@@ -1,0 +1,28 @@
+{{template "layout.html" .}}
+
+{{define "title"}}About - Wingspan Data Hub{{end}}
+
+{{define "main"}}
+<main class="flex-1 p-6 bg-gray-50 overflow-y-auto">
+    <div class="col-span-full bg-white p-6 rounded-lg border border-gray-200">
+        <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-4">
+            About This Project
+        </h2>
+        
+        <div class="prose max-w-none">
+            <p>
+                This is where you can write about your project.
+            </p>
+            <p>
+                The Short Circuit bot is a replacement for the EVE Online application "Short Circuit," created as a learning exercise for the Go programming language.
+            </p>
+            <h3>Credits & Acknowledgements</h3>
+            <ul>
+                <li>Data from the EVE-Scout API</li>
+                <li>Data from the Wingspan TT API</li>
+                <li>EVE Online ESI for game data</li>
+            </ul>
+        </div>
+    </div>
+</main>
+{{end}}

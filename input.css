@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* * This is where we define our custom theme.
+ * Tailwind will use these variables.
+ */
+@layer base {
+  :root {
+    /* Color Palette */
+    --bg-color: #ffffff;
+    --panel-bg: #ffffff;
+    --border-color: #e5e7eb;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --accent-orange: #ea580c;
+    --accent-hover: #f3f4f6;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+  }
+}
+
+/* * You can still have custom component classes if you want.
+ * Tailwind will combine these with utility classes.
+ */
+@layer components {
+  .status-critical {
+    @apply text-red-600 font-semibold;
+  }
+
+    .nav-icon {
+    @apply w-5 h-5 mr-3 flex-shrink-0;
+  }
+}

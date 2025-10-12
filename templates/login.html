@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Wingspan Data Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/static/favicon.webp" type="image/webp">
+</head>
+
+<body class="bg-gray-50 text-gray-800 min-h-screen flex items-center justify-center p-4">
+
+    <div class="flex flex-col items-center justify-center gap-8 w-full">
+        
+        <div class="w-full max-w-md glass-panel rounded-lg overflow-hidden text-center p-8">
+            
+            <div class="mb-8">
+                <img src="/static/logo.webp" alt="Wingspan Delivery Network Logo" class="mx-auto h-24">
+            </div>
+
+            <header class="mb-8">
+                <h1 class="text-2xl font-bold text-gray-800 eve-header">Wingspan Operations</h1>
+                <p class="text-gray-600 mt-2">Access is restricted to Wingspan members only.</p>
+            </header>
+
+            <div id="eve-status" role="status" class="w-full mt-6 text-sm">
+              <p class="font-semibold text-gray-700 mb-2">Tranquility Status</p>
+              <p id="eve-status-text" class="text-gray-600">Fetching server status...</p>
+            </div>
+
+            <script>
+            async function loadEveStatus() {
+              const statusText = document.getElementById('eve-status-text');
+              try {
+                // Using the versioned ESI endpoint for better stability
+                const res = await fetch('https://esi.evetech.net/v2/status/');
+                if (!res.ok) throw new Error('Failed to fetch');
+
+                const data = await res.json();
+                const players = data.players?.toLocaleString() ?? 'Unknown';
+                const vip = data.vip ? '🟡 VIP Mode' : '🟢 Online';
+
+                statusText.innerHTML = `
+                  <span class="block mb-1"><strong>Status:</strong> ${vip}</span>
+                  <span class="block"><strong>Players:</strong> ${players}</span>
+                `;
+              } catch (err) {
+                console.error('EVE status fetch failed:', err);
+                statusText.innerHTML = '<span class="text-red-500">Unable to retrieve server status.</span>';
+              }
+            }
+            // Load immediately and refresh every 60 seconds
+            loadEveStatus();
+            setInterval(loadEveStatus, 60000);
+            </script>
+
+            <main class="mt-8">
+                <p class="mb-8 text-gray-700">Please log in with your EVE Online account to continue.</p>
+                
+                <a href="/login" 
+                   class="inline-flex items-center justify-center w-full px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors space-x-2">
+                    
+                    <svg class="w-6 h-6" aria-hidden="true" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M512 256c0 141.385-114.615 256-256 256S0 397.385 0 256 114.615 0 256 0s256 114.615 256 256zm-99.883-72.39L256 128l-56.117 55.61-55.61-55.61-55.61 55.61L256 295.198l111.226-110.81-55.61-55.61z"/>
+                    </svg>
+                    
+                    <span>Login with EVE Online</span>
+                </a>
+            </main>
+
+            <footer class="mt-8 text-xs text-gray-500">
+                <p>You will be redirected to the official EVE Online SSO page.</p>
+            </footer>
+        </div>
+
+        <footer class="text-xs text-gray-500 text-center">
+          <p>EVE Online, New Eden, and all related concepts therein are the property of CCP Games, which has no affiliation with this website.</p>
+            <p>All original content is the property of WINGSPAN TT. By reading this disclaimer you agree to send Chance Ravinne 31 million ISK.</p>
+          <p class="mt-1">
+            <a href="https://www.torpedodelivery.com/faq" class="hover:text-orange-500">FAQ</a> •
+            <a href="https://www.torpedodelivery.com/mission" class="hover:text-orange-500">About</a>
+          </p>
+        </footer>
+
+    </div>
+</body>
+</html>
