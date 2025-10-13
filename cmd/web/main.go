@@ -30,6 +30,14 @@ func main() {
 	}
 	sessionStore := sessions.NewCookieStore([]byte(sessionKey))
 
+	sessionStore.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   86400 * 7, // 7 days
+		HttpOnly: true,
+		Secure:   false,                // set true in production with HTTPS
+		SameSite: http.SameSiteLaxMode, // allows OAuth redirect to work
+	}
+
 	// 2. Initialize the OAuth2 config with your EVE application credentials.
 	clientID := os.Getenv("EVE_CLIENT_ID")
 	secretKey := os.Getenv("EVE_SECRET_KEY")
