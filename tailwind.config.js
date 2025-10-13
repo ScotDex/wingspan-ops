@@ -35,7 +35,7 @@ module.exports = {
         'DEFAULT': '0.5rem', // Corresponds to --radius
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
       },
     },
   },
