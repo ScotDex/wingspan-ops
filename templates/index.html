@@ -3,31 +3,38 @@
 {{define "title"}}Live Map - Wingspan Data Hub{{end}}
 
 {{define "main"}}
-<main class="flex-1 p-6 bg-gray-50 overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="md:col-span-2 bg-white p-4 rounded-lg border border-gray-200 overflow-x-auto">
+<main class="flex-1 p-6 bg-gray-50 dark:bg-gray-900/70 overflow-y-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <div class="md:col-span-2 bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700 overflow-x-auto">
         <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-4">Wormhole Connections</h2>
         <table class="w-full">
             <thead>
                 <tr>
-                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>From</span><span class="sort-indicator"></span></th>
-                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>To</span><span class="sort-indicator"></span></th>
-                    <th class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap"><span>Sig ID</span></th>
-                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>EOL</span><span class="sort-indicator"></span></th>
-                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>Agent</span><span class="sort-indicator"></span></th>
-                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>Updated</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>From</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>To</span><span class="sort-indicator"></span></th>
+                    <th class="p-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap"><span>Sig ID</span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>EOL</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>Agent</span><span class="sort-indicator"></span></th>
+                    <th data-sortable class="p-3 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none"><span>Updated</span><span class="sort-indicator"></span></th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                 {{range .Connections}}
-                <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="p-3 whitespace-nowrap">{{.FromName | HTML}}</td>
-                    <td class="p-3 whitespace-nowrap">{{.ToName | HTML}}</td>
-                    <td class="p-3 whitespace-nowrap">{{.SignatureID}}</td>
-                    <td class="p-3 whitespace-nowrap {{if eq .EolStatus "critical"}}text-red-600 font-semibold{{end}}">{{.Eol}}</td>
-                    <td class="p-3 whitespace-nowrap">{{.Scout}}</td>
-                    <td class="p-3 whitespace-nowrap">{{.LastUpdated}}</td>
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+
+                    <td class="p-3 whitespace-nowrap text-gray-700 dark:text-gray-300">{{.FromName | HTML}}</td>
+                    <td class="p-3 whitespace-nowrap text-gray-700 dark:text-gray-300">{{.ToName | HTML}}</td>
+                    <td class="p-3 whitespace-nowrap text-gray-700 dark:text-gray-300">{{.SignatureID}}</td>
+                    <td class="p-3 whitespace-nowrap text-gray-700 dark:text-gray-300 {{if eq .EolStatus "critical"}}text-red-600 dark:text-red-500 font-semibold{{end}}">{{.Eol}}</td>
+                    <td class="p-3 whitespace-nowrap text-gray-700 dark:text-gray-300">{{.Scout}}</td>
+                    <td class="p-3 whitespace-nowrap text-gray-700 dark:text-gray-300">{{.LastUpdated}}</td>
                 </tr>
                 {{end}}
+            </tbody>
+        </table>
+    </div>
+    </main>
+{{end}}
             </tbody>
         </table>
     </div>
