@@ -59,24 +59,27 @@ func New(
 }
 
 // RegisterRoutes sets up all the HTTP routes for the application.
+// RegisterRoutes sets up all the HTTP routes for the application.
 func (s *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
 	// --- Public Routes ---
-	// These routes are accessible to everyone, logged in or not.
-
-	// 1. Static file server for CSS, images, etc.
 	fileServer := http.FileServer(http.Dir("./static"))
 	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
-	// 2. Authentication handlers for the SSO login and callback flow.
-	mux.HandleFunc("/login", s.loginPageHandler) // Changed
-	mux.HandleFunc("/callback", s.callbackHandler)
+	// Shows the login page.
+	mux.HandleFunc("/login", s.loginPageHandler)
+
+	// Starts the EVE SSO process. Your login button must point here.
+	mux.HandleFunc("/auth/sso/start", s.loginHandler)
+
+	// Handles the return from EVE's servers.
+	mux.HandleFunc("/auth/sso/callback", s.callbackHandler)
+
+	// Handles logging out.
 	mux.HandleFunc("/logout", s.logoutHandler)
 
 	// --- Protected Routes ---
-	// These routes are wrapped in the authMiddleware. If a user is not
-	// logged in, the middleware will redirect them to the login page.
 	mux.Handle("/", s.authMiddleware(http.HandlerFunc(s.homeHandler)))
 	mux.Handle("/short-circuit", s.authMiddleware(http.HandlerFunc(s.shortCircuitHandler)))
 	mux.Handle("/lookup", s.authMiddleware(http.HandlerFunc(s.lookupHandler)))
