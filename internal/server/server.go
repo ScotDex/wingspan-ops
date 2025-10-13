@@ -70,7 +70,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
 	// 2. Authentication handlers for the SSO login and callback flow.
-	mux.HandleFunc("/login", s.loginHandler)
+	mux.HandleFunc("/login", s.loginPageHandler) // Changed
 	mux.HandleFunc("/callback", s.callbackHandler)
 	mux.HandleFunc("/logout", s.logoutHandler)
 

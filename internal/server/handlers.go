@@ -278,3 +278,23 @@ func (s *Server) aboutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	ts.Execute(w, data)
 }
+
+// loginPageHandler serves the static login page.
+// We use a handler instead of relying solely on the file server
+// to have a clean "/login" URL for redirects.
+func (s *Server) loginPageHandler(w http.ResponseWriter, r *http.Request) {
+	// In a real-world app, you might check if the user is already logged in
+	// and redirect them to the homepage if they are.
+
+	ts, ok := s.templates["login.html"]
+	if !ok {
+		http.Error(w, "Could not load login.html template", http.StatusInternalServerError)
+		return
+	}
+
+	// This handler doesn't need to pass any dynamic data to the template.
+	err := ts.Execute(w, nil)
+	if err != nil {
+		log.Printf("Template execution error: %v", err)
+	}
+}
