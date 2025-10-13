@@ -19,8 +19,8 @@
     --bg-color: #111827;       /* Dark gray */
     --panel-bg: #1f2937;       /* Lighter dark gray */
     --border-color: #374151;   /* Muted gray */
-    --text-primary: #f9fafb;   /* Off-white */
-    --text-secondary: #9ca3af; /* Light gray */
+    --text-primary: #000000;   /* Off-white */
+    --text-secondary: #000000; /* Light gray */
     --accent-hover: #374151;
   }
 
