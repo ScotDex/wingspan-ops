@@ -4,10 +4,11 @@ import "time"
 
 // FrontendData is the main data structure passed to your templates.
 type FrontendData struct {
-	Connections []ConnectionInfo
-	Leaderboard []LeaderboardEntry
-	FeedbackURL string
-	Path        []PathStep
+	Connections   []ConnectionInfo
+	Leaderboard   []LeaderboardEntry
+	FeedbackURL   string
+	Path          []PathStep
+	CharacterName string
 }
 
 type LeaderboardEntry struct {
