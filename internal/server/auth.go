@@ -123,7 +123,7 @@ func (s *Server) logoutHandler(w http.ResponseWriter, r *http.Request) {
 	session.Options.MaxAge = -1 // This effectively deletes the cookie.
 	session.Save(r, w)
 
-	http.Redirect(w, r, "/static/login.html", http.StatusFound)
+	http.Redirect(w, r, "/login.html", http.StatusFound)
 }
 
 // authMiddleware protects routes that require a valid login session.
@@ -132,12 +132,12 @@ func (s *Server) authMiddleware(next http.Handler) http.Handler {
 		session, err := s.sessionStore.Get(r, sessionName)
 		if err != nil {
 			// If we can't get a session, they are not authenticated.
-			http.Redirect(w, r, "/static/login.html", http.StatusFound)
+			http.Redirect(w, r, "/login.html", http.StatusFound)
 			return
 		}
 
 		if auth, ok := session.Values[sessionAuthKey].(bool); !ok || !auth {
-			http.Redirect(w, r, "/static/login.html", http.StatusFound)
+			http.Redirect(w, r, "/login.html", http.StatusFound)
 			return
 		}
 
