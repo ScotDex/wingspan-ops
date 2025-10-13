@@ -115,7 +115,7 @@ func (s *Server) logoutHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := s.sessionStore.Get(r, sessionName)
 	if err != nil {
 		// Even if getting the session fails, we can still try to redirect.
-		http.Redirect(w, r, "/static/login.html", http.StatusFound)
+		http.Redirect(w, r, "/login.html", http.StatusFound)
 		return
 	}
 
