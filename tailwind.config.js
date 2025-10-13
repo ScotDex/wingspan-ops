@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       // This is where we define the color palette from your CSS variables
+      darkMode: 'class',
       colors: {
         'bg': {
           'color': '#ffffff',
