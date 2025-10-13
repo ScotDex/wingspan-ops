@@ -2,12 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * This is where we define our custom theme.
- * Tailwind will use these variables.
- */
 @layer base {
   :root {
-    /* Color Palette */
+    /* Light Mode Color Palette (Default) */
     --bg-color: #ffffff;
     --panel-bg: #ffffff;
     --border-color: #e5e7eb;
@@ -15,6 +12,16 @@
     --text-secondary: #6b7280;
     --accent-orange: #ea580c;
     --accent-hover: #f3f4f6;
+  }
+
+  /* Dark Mode Color Palette */
+  .dark {
+    --bg-color: #111827;       /* Dark gray */
+    --panel-bg: #1f2937;       /* Lighter dark gray */
+    --border-color: #374151;   /* Muted gray */
+    --text-primary: #f9fafb;   /* Off-white */
+    --text-secondary: #9ca3af; /* Light gray */
+    --accent-hover: #374151;
   }
 
   body {
@@ -25,15 +32,38 @@
   }
 }
 
-/* * You can still have custom component classes if you want.
- * Tailwind will combine these with utility classes.
- */
 @layer components {
+  /* Your existing custom components */
   .status-critical {
     @apply text-red-600 font-semibold;
   }
 
-    .nav-icon {
+  .nav-icon {
     @apply w-5 h-5 mr-3 flex-shrink-0;
+  }
+
+  /* Reusable Button Components */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 font-semibold rounded-lg shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400;
+  }
+}
+
+@layer utilities {
+  /* Animation Utilities */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
   }
 }
