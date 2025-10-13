@@ -14,7 +14,21 @@ import (
 	"wingspan-ops/internal/routing"
 )
 
-// homeHandler is for your main "Live Map" page. It renders "index.html".
+// getAuthenticatedUser retrieves the character name from the session.
+func (s *Server) getAuthenticatedUser(r *http.Request) string {
+	session, err := s.sessionStore.Get(r, sessionName)
+	if err != nil {
+		return "" // No session found
+	}
+
+	if name, ok := session.Values[sessionCharNameKey].(string); ok {
+		return name
+	}
+
+	return ""
+}
+
+// homeHandler renders the main "Live Map" page.
 func (s *Server) homeHandler(w http.ResponseWriter, r *http.Request) {
 	var allConnections []models.ConnectionInfo
 	var leaderboard []models.LeaderboardEntry
@@ -50,9 +64,10 @@ func (s *Server) homeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := models.FrontendData{
-		Connections: allConnections,
-		Leaderboard: leaderboard,
-		FeedbackURL: s.feedbackURL,
+		Connections:   allConnections,
+		Leaderboard:   leaderboard,
+		FeedbackURL:   s.feedbackURL,
+		CharacterName: s.getAuthenticatedUser(r),
 	}
 
 	ts, ok := s.templates["index.html"]
@@ -67,11 +82,10 @@ func (s *Server) homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // shortCircuitHandler handles the route planning page and form submissions.
-// shortCircuitHandler handles the route planning page and form submissions.
 func (s *Server) shortCircuitHandler(w http.ResponseWriter, r *http.Request) {
-	// Define the data struct at the top to be used by both GET and POST.
 	data := models.FrontendData{
-		FeedbackURL: s.feedbackURL,
+		FeedbackURL:   s.feedbackURL,
+		CharacterName: s.getAuthenticatedUser(r),
 	}
 
 	if r.Method == http.MethodGet {
@@ -120,8 +134,6 @@ func (s *Server) shortCircuitHandler(w http.ResponseWriter, r *http.Request) {
 		requestGraph.UpdateWormholes(whLinks)
 
 		_, prev := requestGraph.ShortestPath(startID, endID)
-
-		// Pass the esiClient and killMap to the helper function.
 		path := reconstructPath(prev, startID, endID, s.esiClient, killMap)
 
 		data.Path = path
@@ -138,7 +150,8 @@ func (s *Server) shortCircuitHandler(w http.ResponseWriter, r *http.Request) {
 func (s *Server) lookupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		data := models.FrontendData{
-			FeedbackURL: s.feedbackURL,
+			FeedbackURL:   s.feedbackURL,
+			CharacterName: s.getAuthenticatedUser(r),
 		}
 		ts, ok := s.templates["lookup.html"]
 		if !ok {
@@ -169,6 +182,37 @@ func (s *Server) lookupHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// aboutHandler renders the about page.
+func (s *Server) aboutHandler(w http.ResponseWriter, r *http.Request) {
+	data := models.FrontendData{
+		FeedbackURL:   s.feedbackURL,
+		CharacterName: s.getAuthenticatedUser(r),
+	}
+
+	ts, ok := s.templates["about.html"]
+	if !ok {
+		http.Error(w, "Could not load about.html template", http.StatusInternalServerError)
+		return
+	}
+	ts.Execute(w, data)
+}
+
+// Replace your existing loginPageHandler with this simpler version.
+func (s *Server) loginPageHandler(w http.ResponseWriter, r *http.Request) {
+	ts, ok := s.templates["login.html"]
+	if !ok {
+		http.Error(w, "Could not load login.html template", http.StatusInternalServerError)
+		return
+	}
+	// This handler's only job is now to render the template.
+	err := ts.Execute(w, nil)
+	if err != nil {
+		log.Printf("Template execution error: %v", err)
+	}
+}
+
+// --- Processing functions ---
+
 func processConnectionsToWHLinks(wingspanResponse *models.WingspanAPIResponse, theraResponse []models.TheraConnection, esiClient *esi.ESIClient) []routing.WHLink {
 	var links []routing.WHLink
 
@@ -177,25 +221,21 @@ func processConnectionsToWHLinks(wingspanResponse *models.WingspanAPIResponse, t
 			sigInitial, ok1 := wingspanResponse.Signatures[wh.InitialID]
 			sigSecondary, ok2 := wingspanResponse.Signatures[wh.SecondaryID]
 
-			// This is the combined guard clause.
-			// It checks everything at once: signatures exist, IDs are valid numbers, and IDs are valid systems.
 			if !ok1 || !ok2 {
-				continue // Skip if either signature is missing
+				continue
 			}
 			fromID, err1 := strconv.Atoi(sigInitial.SystemID)
 			toID, err2 := strconv.Atoi(sigSecondary.SystemID)
 			if err1 != nil || err2 != nil || fromID < 30000000 || toID < 30000000 {
-				continue // Skip if IDs are not valid numbers or not valid systems
+				continue
 			}
 
-			// If all checks pass, add the link.
 			links = append(links, routing.WHLink{From: fromID, To: toID, Cost: 1})
 		}
 	}
 
 	if theraResponse != nil {
 		for _, tc := range theraResponse {
-			// Apply the same robust check to the Thera data.
 			if tc.OutSystemID >= 30000000 && tc.InSystemID >= 30000000 {
 				links = append(links, routing.WHLink{From: tc.OutSystemID, To: tc.InSystemID, Cost: 1})
 			}
@@ -205,7 +245,6 @@ func processConnectionsToWHLinks(wingspanResponse *models.WingspanAPIResponse, t
 	return links
 }
 
-// --- Replace your existing reconstructPath function with this version ---
 func reconstructPath(prev map[int]int, start, end int, esiClient *esi.ESIClient, killMap map[int]esi.EsiSystemKills) []models.PathStep {
 	var path []models.PathStep
 	current := end
@@ -215,22 +254,16 @@ func reconstructPath(prev map[int]int, start, end int, esiClient *esi.ESIClient,
 	}
 
 	for {
-		// Get full system details to find security status.
 		sysInfo, err := esiClient.GetSystemDetails(current)
-
-		// Look up the kill data for the current system from the map.
 		kills := killMap[current]
-
 		var step models.PathStep
 		if err != nil {
-			// If details aren't found, fallback to just the name.
 			step = models.PathStep{
 				SystemName: esiClient.GetSystemName(current),
 				ShipKills:  kills.ShipKills,
 				NpcKills:   kills.NpcKills,
 			}
 		} else {
-			// Determine the security class for CSS.
 			var secClass string
 			if sysInfo.SecurityStatus >= 0.5 {
 				secClass = "high-sec"
@@ -255,26 +288,10 @@ func reconstructPath(prev map[int]int, start, end int, esiClient *esi.ESIClient,
 		current = prev[current]
 	}
 
-	// Reverse the path to go from start -> end
+	// Reverse the path
 	for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
 		path[i], path[j] = path[j], path[i]
 	}
 
 	return path
-}
-
-// Add this new handler to the file
-
-func (s *Server) aboutHandler(w http.ResponseWriter, r *http.Request) {
-	// We still create the data struct to pass the URLs to the layout
-	data := models.FrontendData{
-		FeedbackURL: s.feedbackURL,
-	}
-
-	ts, ok := s.templates["about.html"]
-	if !ok {
-		http.Error(w, "Could not load about.html template", http.StatusInternalServerError)
-		return
-	}
-	ts.Execute(w, data)
 }
