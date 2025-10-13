@@ -3,32 +3,16 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Light Mode Color Palette (Default) */
-    --bg-color: #ffffff;
-    --panel-bg: #ffffff;
-    --border-color: #e5e7eb;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --accent-orange: #ea580c;
-    --accent-hover: #f3f4f6;
-  }
-
-  /* Dark Mode Color Palette */
-  .dark {
-    --bg-color: #111827;       /* Dark gray */
-    --panel-bg: #1f2937;       /* Lighter dark gray */
-    --border-color: #374151;   /* Muted gray */
-    --text-primary: #000000;   /* Off-white */
-    --text-secondary: #000000; /* Light gray */
-    --accent-hover: #374151;
-  }
-
   body {
-    font-family: 'Inter', sans-serif;
+    /*
+     * The :root and .dark blocks have been removed.
+     * Your theme colors are now controlled by the classes on the <body> tag in your HTML file, like:
+     * <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+     *
+     * I also updated the font-family to 'Montserrat' to match the <link> in your HTML.
+    */
+    font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
   }
 }
 
