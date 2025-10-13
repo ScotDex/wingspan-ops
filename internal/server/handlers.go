@@ -197,18 +197,14 @@ func (s *Server) aboutHandler(w http.ResponseWriter, r *http.Request) {
 	ts.Execute(w, data)
 }
 
+// Replace your existing loginPageHandler with this simpler version.
 func (s *Server) loginPageHandler(w http.ResponseWriter, r *http.Request) {
-	// This handler's ONLY job is to render the login template.
-	// The authMiddleware will handle redirecting users who are already logged in
-	// because the /login route itself should also be protected by middleware
-	// that redirects authenticated users away.
-
 	ts, ok := s.templates["login.html"]
 	if !ok {
 		http.Error(w, "Could not load login.html template", http.StatusInternalServerError)
 		return
 	}
-
+	// This handler's only job is now to render the template.
 	err := ts.Execute(w, nil)
 	if err != nil {
 		log.Printf("Template execution error: %v", err)

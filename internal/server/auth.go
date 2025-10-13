@@ -217,3 +217,22 @@ func generateRandomState() (string, error) {
 	}
 	return base64.StdEncoding.EncodeToString(b), nil
 }
+
+// redirectIfAuthMiddleware redirects an already authenticated user to the homepage.
+// This is used to prevent logged-in users from seeing the login page again.
+func (s *Server) redirectIfAuthMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Check if the user has a valid session.
+		session, err := s.sessionStore.Get(r, sessionName)
+		if err == nil {
+			// If they do, check if the authenticated flag is true.
+			if auth, ok := session.Values[sessionAuthKey].(bool); ok && auth {
+				// If they are authenticated, redirect them to the homepage and stop.
+				http.Redirect(w, r, "/", http.StatusFound)
+				return
+			}
+		}
+		// If they are not authenticated, just proceed to the next handler (the loginPageHandler).
+		next.ServeHTTP(w, r)
+	})
+}
