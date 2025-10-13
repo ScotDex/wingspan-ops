@@ -23,7 +23,7 @@ const (
 	sessionCharNameKey = "character_name"
 
 	// Wingspan Corporation ID
-	wingspanCorpID = 1000182
+	wingspanCorpID = 98330748
 )
 
 // --- Structs for decoding EVE API responses ---
