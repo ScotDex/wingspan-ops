@@ -58,7 +58,6 @@ func New(
 	}, nil
 }
 
-// Replace your existing RegisterRoutes function with this version.
 func (s *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
@@ -66,14 +65,11 @@ func (s *Server) RegisterRoutes() http.Handler {
 	fileServer := http.FileServer(http.Dir("./static"))
 	mux.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
-	// The login page is now protected by a middleware that redirects logged-in users away.
+	// The login page is now correctly protected by the redirectIfAuthMiddleware.
 	mux.Handle("/login", s.redirectIfAuthMiddleware(http.HandlerFunc(s.loginPageHandler)))
 
-	// Starts the EVE SSO process. Your login button must point here.
 	mux.HandleFunc("/auth/sso/start", s.loginHandler)
-	// Handles the return from EVE's servers.
 	mux.HandleFunc("/auth/sso/callback", s.callbackHandler)
-	// Handles logging out.
 	mux.HandleFunc("/logout", s.logoutHandler)
 
 	// --- Protected Routes ---
