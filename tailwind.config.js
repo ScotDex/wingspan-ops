@@ -21,8 +21,8 @@ module.exports = {
           'color': '#e5e7eb',
         },
         'text': {
-          'primary': '#1f2937',
-          'secondary': '#6b7280',
+          'primary': '#f3f4f6',
+          'secondary': '#9ca3af',
         },
         'accent': {
           'orange': '#ea580c',
