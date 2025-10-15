@@ -7,8 +7,6 @@
 
 ---
 
-## 🟡 Medium (Requires EVE Login)
-- [ ] Integrate the full "Log in with EVE" OAuth2 flow.
 - [ ] Add a "Use my current location" button for the route planner's start system.
 - [ ] Add a "Set in-game destination" button to the route results.
 
@@ -17,4 +15,3 @@
 ## 🔴 Hard (Core Logic Changes)
 - [ ] Implement Security Prioritization sliders (this requires adding "weights" to the pathfinding algorithm).
 - [ ] Implement a system "Avoidance List".
-- [ ] Integrate with the Tripwire API to pull chain maps.
