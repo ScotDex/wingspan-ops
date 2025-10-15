@@ -4,47 +4,86 @@
 
 {{define "main"}}
 <main class="flex-1 p-6 bg-gray-50 overflow-y-auto">
-    <div class="bg-white p-6 rounded-lg border border-gray-200">
-        <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-6">
-            So, What Is This Thing?
-        </h2>
-        
-        <div class="prose max-w-none text-gray-700">
-            <p>
-                Welcome to the <strong>Wingspan Data Hub</strong>(it needs a better name, suggestions in the feedback form!). This is essentially what happens when I see something old and decrepid and want to do some good <a href="https://zkillboard.com/character/95282689/" target="_blank" rel="noopener noreferrer" class="text-orange-600 hover:underline">Dexomus Viliana</a>, so its still under testing and development but we have regained most of the features of short circuit.
-            </p>
-            <p>
-                The original infrastructure was getting a bit old, creaking under the weight of a decade of internet dust. The goal was simple: redevelop its functionality into something fast, clean, and less likely to break than a promise in Jita.
-            </p>
+    <div class="max-w-7xl mx-auto">
+
+        <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm mb-8">
+            <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-6">
+                So, What Is This Thing?
+            </h2>
             
-            <h3>What Can It Actually Do?</h3>
-            <p>It's not just a pretty face. Here’s the toolkit at your disposal:</p>
-            <ul>
-                <li><strong>Live Wormhole Connections:</strong> See a real-time list of all known wormhole connections, so you can stop face-checking that C2 with a 2 billion ISK Loki.</li>
-                <li><strong>Agent Leaderboard:</strong> A little friendly competition never hurt anyone. This board tracks agent scan counts, giving you a valid reason to resent your corpmates.</li>
-                <li><strong>Character Lookup:</strong> Spell the name right and you'll never have to google someone again.</li>
-                <li><strong>Route Planner ("Short Circuit"):</strong> Find the quickest path from A to B through the tangled web of wormhole space. It's like a GPS for people who enjoy the constant threat of being vaporized by Sleepers.</li>
-            </ul>
+            <div class="prose max-w-none text-gray-700">
+                <p>
+                    Welcome to the <strong>Wingspan Data Hub</strong> (it needs a better name, suggestions in the feedback form!). This is essentially what happens when I see something old and decrepit and want to do some good. The project is still under testing and development by <a href="https://zkillboard.com/character/95282689/" target="_blank" rel="noopener noreferrer" class="text-orange-600 hover:underline">Dexomus Viliana</a>, but we have regained most of the features of the original Short Circuit tool.
+                </p>
+                <p>
+                    The original infrastructure was getting a bit old, creaking under the weight of a decade of internet dust. The goal was simple: redevelop its functionality into something fast, clean, and less likely to break than a promise in Jita.
+                </p>
+            </div>
+        </div>
 
-            <h3>Acknowledgements & The Future</h3>
-            <p>
-                A massive thank you goes out to <strong>EVE-Scout</strong>; their public Thera connections API as it makes things a little more rich. You can check it out <a href="https://api.eve-scout.com/ui/" target="_blank" rel="noopener noreferrer" class="text-orange-600 hover:underline">here</a>.
-            </p>
-            <p>
-                More features are in the pipeline. Stay tuned.
-            </p>
+        <div class="mb-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">What Can It Actually Do?</h3>
+            <p class="text-gray-600 mb-6">It's not just a pretty face. Here’s the toolkit at your disposal:</p>
 
-            <h3>Support the Hub</h3>
-            <p>
-                Keeping the lights on for this infrastructure isn't always free. If you find this tool useful and want to help cover the costs, a small donation is always appreciated!
-            </p>
-            <div class="mt-4">
-                <a href="YOUR_DONATION_URL_HERE" target="_blank" rel="noopener noreferrer" class="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition-colors">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in">
+                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-orange-500 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                    </div>
+                    <h4 class="font-semibold text-gray-900 mb-2">Live Wormhole Connections</h4>
+                    <p class="text-gray-600 text-sm">See a real-time list of all known wormhole connections, so you can stop face-checking that C2 with a 2 billion ISK Loki.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-orange-500 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    </div>
+                    <h4 class="font-semibold text-gray-900 mb-2">Agent Leaderboard</h4>
+                    <p class="text-gray-600 text-sm">A little friendly competition never hurt anyone. This board tracks agent scan counts, giving you a valid reason to resent your corpmates.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-orange-500 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    </div>
+                    <h4 class="font-semibold text-gray-900 mb-2">Character Lookup</h4>
+                    <p class="text-gray-600 text-sm">Spell the name right and you'll never have to google someone again.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="text-orange-500 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 13v- உண்மையில்" /></svg>
+                    </div>
+                    <h4 class="font-semibold text-gray-900 mb-2">Route Planner ("Short Circuit")</h4>
+                    <p class="text-gray-600 text-sm">Find the quickest path from A to B through the tangled web of wormhole space. It's like a GPS for people who enjoy the constant threat of being vaporized by Sleepers.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Acknowledgements & The Future</h3>
+                <div class="prose prose-sm max-w-none text-gray-700">
+                    <p>
+                        A massive thank you goes out to <strong>EVE-Scout</strong>; their public Thera connections API makes things a little more rich. You can check it out <a href="https://api.eve-scout.com/ui/" target="_blank" rel="noopener noreferrer" class="text-orange-600 hover:underline">here</a>.
+                    </p>
+                    <p>
+                        More features are in the pipeline. Stay tuned.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-orange-50 p-6 rounded-lg border border-orange-200">
+                <h3 class="text-lg font-semibold text-orange-800 mb-4">Support the Hub</h3>
+                <p class="text-orange-700 mb-6">
+                    Keeping the lights on for this infrastructure isn't always free. If you find this tool useful and want to help cover the costs, a small donation is always appreciated!
+                </p>
+                <a href="YOUR_DONATION_URL_HERE" target="_blank" rel="noopener noreferrer" class="btn-primary">
                     Buy the Dev a Coffee (or some PLEX)
                 </a>
             </div>
-
         </div>
+
     </div>
 </main>
 {{end}}
