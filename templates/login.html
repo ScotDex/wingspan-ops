@@ -52,48 +52,7 @@
         </footer>
     </div>
 
-    <script>
-    async function loadEveStatus() {
-      const statusContent = document.getElementById('eve-status-content');
-      try {
-        const res = await fetch('https://esi.evetech.net/v2/status/');
-        if (!res.ok) throw new Error('Failed to fetch');
 
-        const data = await res.json();
-        const players = data.players?.toLocaleString() ?? 'Unknown';
-        
-        let statusClass = 'bg-green-500';
-        let statusText = 'Online';
-        if (data.vip) {
-            statusClass = 'bg-yellow-500';
-            statusText = 'VIP Mode';
-        }
-
-        statusContent.innerHTML = `
-            <span class="relative flex h-3 w-3">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full ${statusClass} opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 ${statusClass}"></span>
-            </span>
-            <span class="font-semibold text-gray-800">Tranquility:</span>
-            <span>${statusText}</span>
-            <span class="text-gray-400">|</span>
-            <span>${players} Pilots</span>
-        `;
-      } catch (err) {
-        console.error('EVE status fetch failed:', err);
-        statusContent.innerHTML = `
-            <span class="relative flex h-3 w-3">
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
-            <span class="font-semibold text-red-600">Status:</span>
-            <span class="text-red-500">Unavailable</span>
-        `;
-      }
-    }
-    // Load immediately and refresh every 60 seconds
-    loadEveStatus();
-    setInterval(loadEveStatus, 60000);
-    </script>
 
 </body>
 </html>
