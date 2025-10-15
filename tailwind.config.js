@@ -12,11 +12,11 @@ module.exports = {
         'background': '#ffffff',
         'panel': '#ffffff',
         'border': '#e5e7eb',
-        'text-primary': '#111827', // Dark gray for readability
+        'text-primary': '#111827',
         'text-secondary': '#6b7280',
         'accent': {
-          'DEFAULT': '#ea580c', // Default orange
-          'hover': '#f9fafb',   // Light gray for hover states
+          'DEFAULT': '#ea580c',
+          'hover': '#f9fafb',
         },
         'high-sec': '#10B981',
         'low-sec': '#F59E0B',
@@ -26,13 +26,21 @@ module.exports = {
         'DEFAULT': '0.5rem',
       },
       fontFamily: {
-        // Montserrat is now the default sans-serif font for the project
         sans: ['Montserrat', 'sans-serif'],
       },
+      keyframes: {
+        fadeIn: {
+          'from': { opacity: '0', transform: 'translateY(5px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
+        }
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+      }
     },
   },
   plugins: [
-    plugin(function({ addBase, addComponents, theme }) {
+    plugin(function({ addBase, addComponents, addUtilities, theme }) {
       // --- Base Styles ---
       addBase({
         'html': {
@@ -44,22 +52,11 @@ module.exports = {
         'a': {
           color: theme('colors.accent.DEFAULT'),
           textDecoration: 'none',
-          '&:hover': {
-            textDecoration: 'underline',
-          }
-        },
-        'table': {
-            width: '100%',
-            borderCollapse: 'collapse',
-        },
-        'th, td': {
-            padding: '12px 15px',
-            textAlign: 'left',
-            borderBottom: `1px solid ${theme('colors.border')}`,
+          '&:hover': { textDecoration: 'underline' }
         },
       });
       
-      // --- Reusable Component Classes ---
+      // --- Reusable Component Classes (Fully Populated) ---
       addComponents({
         '.container': {
           width: '95vw',
@@ -98,9 +95,27 @@ module.exports = {
             borderLeft: `3px solid ${theme('colors.accent.DEFAULT')}`,
         },
         '.status-critical': {
-            color: '#dc2626',
-            fontWeight: '600',
+            '@apply text-red-600 font-semibold': {},
         },
+        '.nav-icon': {
+            '@apply w-5 h-5 mr-3 flex-shrink-0': {},
+        },
+        '.btn': {
+            '@apply inline-flex items-center justify-center px-4 py-2 font-semibold rounded-lg shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2': {},
+        },
+        '.btn-primary': {
+            '@apply btn bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-500': {},
+        },
+        '.btn-secondary': {
+            '@apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400': {},
+        },
+      });
+
+      // --- Custom Utility Classes ---
+      addUtilities({
+        '.animate-fade-in': {
+          animation: theme('animation.fade-in'),
+        }
       });
     })
   ],
