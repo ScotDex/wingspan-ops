@@ -104,7 +104,7 @@ module.exports = {
             '@apply inline-flex items-center justify-center px-4 py-2 font-semibold rounded-lg shadow-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2': {},
         },
         '.btn-primary': {
-            '@apply btn-primary bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-500': {},
+            '@apply btn bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-500': {},
         },
         '.btn-secondary': {
             '@apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400': {},
