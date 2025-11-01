@@ -34,18 +34,18 @@
         </table>
     </div>
 
-    <div class="bg-white p-4 rounded-lg border border-gray-200">
+    <div class=" dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
         <h2 class="text-lg font-medium text-orange-600 uppercase tracking-wider border-l-4 border-orange-600 pl-2 mb-4">Agent Leaderboard</h2>
         <div class="space-y-2 text-sm">
             {{if .Leaderboard}}
                 {{range .Leaderboard}}
-                <div class="flex justify-between items-center bg-gray-50 px-3 py-2 rounded">
-                    <span>{{.ScoutName}}</span>
-                    <span class="font-bold text-orange-600">{{.ScanCount}} Scans</span>
-                </div>
+<div class="flex justify-between items-center px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+    <span class="text-gray-700 dark:text-gray-300">{{.ScoutName}}</span>
+    <span class="font-bold text-orange-600">{{.ScanCount}} Scans</span>
+</div>
                 {{end}}
             {{else}}
-                <p class="text-xs text-gray-500">No scan data available.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">No scan data available.</p>
             {{end}}
         </div>
     </div>
